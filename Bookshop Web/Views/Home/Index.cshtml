@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ProductListResponse>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <partial name="_ProductCard" model="@item"/>
+        </div>
+    }
+</div>
+<div class="text-center">
+    <ul class="pagination justify-content-center">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">
+                    Previous
+                </a>
+            </li>
+        }
+
+        @for (int pages = 1; pages <= ViewBag.TotalPage; pages++)
+        {
+            <li class="page-item @(pages == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@pages" asp-route-catId="@ViewBag.Category">
+                    @pages
+                </a>
+            </li>
+        }
+        @if (ViewBag.CurrentPage < ViewBag.TotalPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">
+                    Next
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+
+
+@section Scripts
+{
+<script>
+    $(document).ready(function()
+    {
+        $('.cart').on('click', function() {
+
+            const id = $(this).data('id');
+
+            $.ajax({
+                url: `/Cart/Add/${id}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data)
+                { 
+                    alertify.success(data);
+                }
+            });
+        });
+    });
+</script>
+}

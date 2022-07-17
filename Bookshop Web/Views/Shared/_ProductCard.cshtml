@@ -1,0 +1,20 @@
+﻿@model ProductListResponse
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@Model.ImgUrl" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">@Model.Description</p>
+                <p class="card-text"><small class="text-muted">@(Model.Price) - @(Model.Price*Model.Discount)</small></p>
+                <p class="card-text"> = @(Model.Price-Model.Price*Model.Discount)TL</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary cart" type="button" data-id=@(Model.Id)>Add Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

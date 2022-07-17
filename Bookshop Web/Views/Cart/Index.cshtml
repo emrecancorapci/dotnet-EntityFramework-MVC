@@ -1,0 +1,38 @@
+﻿@model CartCollection
+@{
+    ViewData["Title"] = "My Cart";
+}
+
+<h1>My Cart</h1>
+@if (Model.Items.Count == 0)
+{
+    <div class="alert alert-warning">Cart is empty.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity </td>
+                <td>@(item.Product.Price * (1-item.Product.Discount) * item.Quantity )</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">Total: @(Model.GetTotalPrice())</td>
+        </tr>
+        </tfoot>
+    </table>
+}
